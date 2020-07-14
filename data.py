@@ -54,7 +54,6 @@ def addKorean(attD, excel):
       except UnicodeDecodeError:
         f = open(fileName + ".txt", 'rt', encoding = 'UTF16')
         attD.get(fileName)[0] = f.read()
-    print(fileName)
   os.chdir("..")
   return attD
 
@@ -74,6 +73,7 @@ def makeDict(dirList):
 
 attD = makeDict(os.listdir(os.getcwd()))
 
-  
-print(attD)
+for key, value in attD.items():
+  if value[0] == "!!! FILE NOT FOUND !!!":
+    print(key, value)
     
