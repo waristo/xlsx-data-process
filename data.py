@@ -32,9 +32,10 @@ def addKorean(attD, excel):
         f = open(fileName + ".txt", 'rt')
         attD.get(fileName)[0] = f.read()
       except FileNotFoundError:
-        attD.get(fileName)[0] = "!!! FILE NOT FOUND !!!"
+        attD = checker1(fileName, attD)
+        # attD = checker2(fileName, attD)
       except UnicodeDecodeError:
-        f = open(fileName + ".txt", 'rt', encoding = 'UTF8')
+        f = open(fileName + ".txt", 'rt', encoding = 'UTF16')
         attD.get(fileName)[0] = f.read()
     if (prvFolder != row.대화번호) :
       prvFolder = row.대화번호
@@ -50,14 +51,14 @@ def addKorean(attD, excel):
         f = open(fileName + ".txt", 'rt')
         attD.get(fileName)[0] = f.read()
       except FileNotFoundError:
-        attD.get(fileName)[0] = "!!! FILE NOT FOUND !!!"
+        attD = checker1(fileName, attD)
+        # attD = checker2(fileName, attD)
+        # attD.get(fileName)[0] = "!!! FILE NOT FOUND !!!"
       except UnicodeDecodeError:
         f = open(fileName + ".txt", 'rt', encoding = 'UTF16')
         attD.get(fileName)[0] = f.read()
   os.chdir("..")
   return attD
-
-
 
 def makeDict(dirList):
   attD = dict()
@@ -71,9 +72,49 @@ def makeDict(dirList):
   return attD
 
 
-attD = makeDict(os.listdir(os.getcwd()))
+def findNotFound(items, fileName) :
+  f = open(fileName, "wt")
+  for key, value in items:
+    if value[0] == "!!! FILE NOT FOUND !!!":
+      f.write(key + "\n")
 
-for key, value in attD.items():
-  if value[0] == "!!! FILE NOT FOUND !!!":
-    print(key, value)
-    
+def checker1(fileName, attD):
+  fileList = os.listdir(os.getcwd())
+  flag = True
+  for f in fileList :
+    if (fileName.replace("_","").replace("-","") + ".txt" == f.replace("_","").replace("-","")) :
+      try :
+        fd = open(f, 'rt')
+        attD.get(fileName)[0] = fd.read()
+      except UnicodeDecodeError:
+        fd = open(f, 'rt', encoding = 'UTF16')
+        attD.get(fileName)[0] = fd.read()
+      flag = False
+      break
+  if flag :
+    # print(fileName + "  :  " + fileName[-5:])
+    attD.get(fileName)[0] = "!!! FILE NOT FOUND !!!"
+  return attD
+
+def checker2(fileName, attD):
+  fileList = os.listdir(os.getcwd())
+  flag = True
+  for f in fileList :
+    if (fileName[-5:] + ".txt" in f) :
+      try :
+        fd = open(f, 'rt')
+        attD.get(fileName)[0] = fd.read()
+      except UnicodeDecodeError:
+        fd = open(f, 'rt', encoding = 'UTF16')
+        attD.get(fileName)[0] = fd.read()
+      flag = False
+      break
+  if flag :
+    # print(fileName + "  :  " + fileName[-5:])
+    attD.get(fileName)[0] = "!!! FILE NOT FOUND !!!"
+  return attD
+
+attD = makeDict(os.listdir(os.getcwd()))
+# findNotFound(attD.items(), "checker1.txt")
+# print(len(attD.keys()))
+print(attD)
