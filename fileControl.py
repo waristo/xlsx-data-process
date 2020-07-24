@@ -76,28 +76,10 @@ def syncToCut():
     if 'Sync00' in file:
       try:
         cutIndex = file.index('_no_speaker')
-        os.rename(file, file[:cutIndex].replace('Sync00','cut'))
-        # print(file[:cutIndex].replace('Sync00','cut'))
+        os.rename(file, file[:cutIndex].replace('Sync00','cut') + '.pcm')
+        # print(file[:cutIndex].replace('Sync00','cut') + '.pcm')
       except:
         print(file)
-
-def fix():
-  fileList = allfile('.')
-  for file in fileList:
-    if ('cut' in file) and ('.txt' not in file):
-      os.rename(file, file + '.pcm')
-
-def fix2():
-  fileList = allfile('.')
-  for file in fileList:
-    if ('.pcm.pcm' in file):
-      os.rename(file, file.replace('.pcm.pcm', 'pcm'))
-
-def fix3():
-  fileList = allfile('.')
-  for file in fileList:
-    if ('pcm' in file) and ('.pcm' not in file):
-      os.rename(file, file.replace('pcm', '.pcm'))
 
 def checker():
   fileList = allfile('.')
@@ -109,10 +91,22 @@ def checker():
       elif '.txt' in file:
         if file.replace('.txt','.pcm') not in fileList:
           print(file)
+
+def txtView():
+  fileList = allfile('.')
+  for file in fileList:
+    if ('_cut' in file) and ('.txt' in file):
+      try:
+        f = open(file, 'rt')
+        print(file.split('\\')[-1])
+        print(f.read())
+      except:
+        print(file)
+        print('ERROR')
 # splitAllText()
 # fileDelete()
 # fileCheck()
 # fileCheck2()
 # syncToCut()
-# fix3()
-checker()
+# checker()
+txtView()

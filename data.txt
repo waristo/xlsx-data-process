@@ -1,0 +1,25 @@
+
+폴더에 오타가 있어서 폴더를 읽지 못함 :
+예시) sm950n 이라 적혀있지만 sm950
+- 이라 적혀있지만 _
+
+=> 폴더에서 오류가 나면, 찾아서 고치면 됨
+
+규칙이 일정하지 않음:
+예시) excel에 띄어쓰기가 파일에서 _ 가 아니라 공백임
+KOR_YJW_M_20_GALAXY_A9_PRO_OTH_electronic vehicle charging_B_05
+KOR_YJW_M_20_GALAXY_A9_PRO_OTH_electronicvehiclecharging_B_05
+file에 있는 오타. 예) retal이라 적혀있지만 실제 파일이름은 rental
+
+=> 실제 존재하지 않는 file이 있어서 일일히 비교해야됨
+
+현재 엑셀 변환 규칙 : 오른쪽 공백제거, '('과 ')' 없앰, " " 공백은 "_"
+=> 19000개의 filenotfound 발생
+
+i)  checker1 함수를 만들어서, 파일명의 오른쪽 5자리를 비교해 다시 찾아줌
+=> 60개 file 검출
+ii)  checker2 함수를 만들어서, 파일명의 "-","_"를 빼고 비교해 다시 찾아줌
+=>77개 file 검출
+
+=======
+pcm 개수와 dict key의 개수가 같지 않아 dict의 검증 필요
