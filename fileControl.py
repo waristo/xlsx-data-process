@@ -13,8 +13,10 @@ def toList(fileName):
 def allfile(path):
   res = []
   for root, dirs, files in os.walk(path):
-    for file in files:
-      res.append(os.path.join(root, file))
+    for Dir in dirs:
+      res.append(os.path.join(root, Dir))
+    # for file in files:
+    #   res.append(os.path.join(root, file))
   return res
 
 def splitTxt(fileName):
@@ -109,4 +111,5 @@ def txtView():
 # fileCheck2()
 # syncToCut()
 # checker()
-txtView()
+# txtView()
+print(allfile('.'))
