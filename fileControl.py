@@ -13,10 +13,10 @@ def toList(fileName):
 def allfile(path):
   res = []
   for root, dirs, files in os.walk(path):
-    for Dir in dirs:
-      res.append(os.path.join(root, Dir))
-    # for file in files:
-    #   res.append(os.path.join(root, file))
+    # for Dir in dirs:
+      # res.append(os.path.join(root, Dir))
+    for file in files:
+      res.append(os.path.join(root, file))
   return res
 
 def splitTxt(fileName):
@@ -35,7 +35,7 @@ def splitTxt(fileName):
 
 def splitAllText():
   fileList = allfile('.')
-  targetList = toList('utt2dur_s_28_s')
+  targetList = toList('utt2num_frames_remain_s')
 
   for target in targetList:
     location = ''
@@ -105,6 +105,17 @@ def txtView():
       except:
         print(file)
         print('ERROR')
+
+def target_txt_view():
+  fileList = allfile('.')
+  targetList = toList('utt2num_frames_remain_s')
+  for target in targetList:
+    for file in fileList:
+      if (target in file) and ('cut' in file) and ('.txt' in file):
+        f = open(file, 'rt')
+        print(file.split('\\')[-1])
+        print(f.read())
+
 # splitAllText()
 # fileDelete()
 # fileCheck()
@@ -112,4 +123,5 @@ def txtView():
 # syncToCut()
 # checker()
 # txtView()
-print(allfile('.'))
+# print(allfile('.'))
+target_txt_view()
